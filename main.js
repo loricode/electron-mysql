@@ -38,6 +38,10 @@ ipcMain.handle('get', () => {
    getProducts()
 })
 
+ipcMain.handle('add', (event, obj) => {
+  addProduct(obj)
+})
+
 function getProducts()
 {
   db.query('SELECT * FROM product', (error, results, fields) => {
@@ -49,5 +53,18 @@ function getProducts()
   });  
 }
 
+
+function addProduct(obj){
+  console.log(obj)
+  const sql = "INSERT INTO product SET ?";  
+  db.query(sql, obj, (error, results, fields) => {
+    if(error) {
+       console.log(error);
+    }
+    console.log(results)
+    getProducts()  
+ });
+  
+}
 
 
