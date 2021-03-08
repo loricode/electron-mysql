@@ -9,8 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
    btnform = document.getElementById("btnform")
    name = document.getElementById("name")
    price = document.getElementById("price")
-   btnform.onclick = renderAddProduct
-
+   btnform.onclick = renderAddProduct  
    renderGetProducts() 
 })
 
@@ -40,13 +39,31 @@ ipcRenderer.on('products', (event, results) => {
          <tr>
             <td>${element.name}</td>
             <td>${element.price}</td>
+            <td>
+            
+             <button class="btn btn-danger"
+               id="${element.id}"
+               "'${onclick = renderdeleteproduct}'"
+               > 
+               delete
+             </button>
+           
+            </td>
          </tr>
       ` 
    });
      
+  
    mylist.innerHTML = template
    name.value = ""
    price.value = "" 
- })
+ });
 
-
+async function renderdeleteproduct(e)
+{
+   console.log(e.srcElement)
+   const obj = {id: e.srcElement.id}
+   
+   await ipcRenderer.invoke('delete', obj) 
+    
+}

@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path'); 
+
 let db = require('./database')
 
 let win;
@@ -10,6 +11,7 @@ function createWindow () {
     webPreferences: {
      // nodeIntegration: true,
      // contextIsolation:true,
+     // devTools:false,
      preload:path.join(app.getAppPath(), './index.js')
       
     }
@@ -42,6 +44,10 @@ ipcMain.handle('add', (event, obj) => {
   addProduct(obj)
 })
 
+ipcMain.handle('delete', (event, obj) => {
+  deleteproduct(obj)
+})
+
 function getProducts()
 {
   db.query('SELECT * FROM product', (error, results, fields) => {
@@ -55,16 +61,25 @@ function getProducts()
 
 
 function addProduct(obj){
-  console.log(obj)
   const sql = "INSERT INTO product SET ?";  
   db.query(sql, obj, (error, results, fields) => {
     if(error) {
        console.log(error);
     }
-    console.log(results)
     getProducts()  
  });
-  
 }
 
+function deleteproduct(obj){
+ 
+  const { id } = obj
+  const sql = "DELETE FROM product WHERE id = ?"
+  db.query(sql, id, (error, results, fields) => {
+    if(error) {
+       console.log(error);
+    }
+    getProducts()  
+ });
+
+}
 
