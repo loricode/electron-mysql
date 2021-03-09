@@ -80,10 +80,9 @@ ipcRenderer.on('products', (event, results) => {
    if(list.length > 0){
       btndelete = document.getElementById("btndelete")
       btnedit = document.getElementById("btnedit")
-      if(btndelete!=null){
-         btndelete.onclick = renderdeleteproduct
-         btnedit.onclick = rendergetproduct
-      }
+      btndelete.onclick = renderdeleteproduct
+      btnedit.onclick = rendergetproduct
+      console.log("ddf")
    }
    
     
