@@ -17,7 +17,7 @@ let btnedit;
 window.onload = function() { 
    mylist = document.getElementById("mylist") 
    btnform = document.getElementById("btnform")
-   btnUpdate = document.getElementById("btnupdate")
+   btnUpdate = document.getElementById("btnUpdate")
    idproduct = document.getElementById("idproduct")
    name = document.getElementById("name")
    price = document.getElementById("price")
@@ -88,10 +88,6 @@ ipcRenderer.on('products', (event, results) => {
    
     
 });
-
-
-
-
 
 async function renderdeleteproduct(e)
 {
