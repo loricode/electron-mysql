@@ -56,7 +56,7 @@ ipcMain.handle('get_one', (event, obj) => {
       console.log(error);
     }
     console.log(results)
-   // win.webContents.send('product', results[0])
+    win.webContents.send('product', results[0])
   });  
    
 })

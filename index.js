@@ -82,7 +82,6 @@ ipcRenderer.on('products', (event, results) => {
       btnedit = document.getElementById("btnedit")
       btndelete.onclick = renderdeleteproduct
       btnedit.onclick = rendergetproduct
-      console.log("ddf")
    }
    
     
