@@ -17,12 +17,12 @@ let btndelete;
 window.onload = function() { 
    mylist = document.getElementById("mylist") 
    btnform = document.getElementById("btnform")
-   btnUpdate = document.getElementById("btnUpdate")
+  
    idproduct = document.getElementById("idproduct")
    name = document.getElementById("name")
    price = document.getElementById("price")
    btnform.onclick = renderAddProduct  
-   btnUpdate.onclick = renderUpdateProduct
+  
    
 
    
@@ -71,7 +71,12 @@ ipcRenderer.on('products', (event, results) => {
              </button>
              </td>
              <td>
-            
+             <button class="btn btn-info"
+               id="btnupdate"
+               value="${element.id}"
+             > 
+             delete
+           </button>
            
             </td>
          </tr>
@@ -82,8 +87,10 @@ ipcRenderer.on('products', (event, results) => {
    
    if(list.length > 0){
       btndelete = document.getElementById("btndelete")
+      btnUpdate = document.getElementById("btnUpdate")
       if(btndelete!=null){
          btndelete.onclick = renderdeleteproduct
+         btnUpdate.onclick = renderUpdateProduct
       }
    }
    
