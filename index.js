@@ -22,10 +22,7 @@ window.onload = function() {
    name = document.getElementById("name")
    price = document.getElementById("price")
    btnform.onclick = renderAddProduct  
-  
-   
-
-   
+   btnUpdate.onclick = renderUpdateProduct
    
    renderGetProducts() 
 };
@@ -107,16 +104,16 @@ async function renderdeleteproduct(e)
 
 function rendergetproduct(e){
    
-   const obj = { id: e.srcElement.id }
+   const obj = { id: e.target.value}
    ipcRenderer.invoke("get_one" , obj)
 
 }
 
-/*ipcRenderer.on('product',(event, result) => {
+ipcRenderer.on('product',(event, result) => {
    idproduct.value = result.id
    name.value = result.name
    price.value = result.price
-});*/
+});
 
 function renderUpdateProduct()
 {
