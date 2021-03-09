@@ -7,7 +7,7 @@ let price;
 let btnform;
 let btnUpdate;
 let btndelete;
-
+let btnedit;
 
 
 /*document.addEventListener("DOMContentLoaded", function() {
@@ -17,7 +17,7 @@ let btndelete;
 window.onload = function() { 
    mylist = document.getElementById("mylist") 
    btnform = document.getElementById("btnform")
-  
+   btnUpdate = document.getElementById("btnupdate")
    idproduct = document.getElementById("idproduct")
    name = document.getElementById("name")
    price = document.getElementById("price")
@@ -62,21 +62,19 @@ ipcRenderer.on('products', (event, results) => {
             <td>${element.name}</td>
             <td>${element.price}</td>
             <td>
-            
-             <button class="btn btn-danger"
-               id="btndelete"
-               value="${element.id}"
-               > 
-               delete
-             </button>
+              <button class="btn btn-danger"
+                id="btndelete"
+                value="${element.id}"> 
+                delete
+              </button>
              </td>
+             
              <td>
-             <button class="btn btn-info"
-               id="btnupdate"
-               value="${element.id}"
-             > 
-             delete
-           </button>
+               <button class="btn btn-info"
+                id="btnedit"
+                value="${element.id}"> 
+                update
+              </button>
            
             </td>
          </tr>
@@ -87,10 +85,10 @@ ipcRenderer.on('products', (event, results) => {
    
    if(list.length > 0){
       btndelete = document.getElementById("btndelete")
-      btnUpdate = document.getElementById("btnUpdate")
+      btnedit = document.getElementById("btnedit")
       if(btndelete!=null){
          btndelete.onclick = renderdeleteproduct
-         btnUpdate.onclick = renderUpdateProduct
+         btnedit.onclick = rendergetproduct
       }
    }
    
