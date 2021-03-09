@@ -27,9 +27,6 @@ window.onload = function() {
    renderGetProducts() 
 };
 
-if(btndelete !=null){
-   console.log(btndelete)
-}
 
 async function renderGetProducts() 
 {
