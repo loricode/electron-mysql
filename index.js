@@ -1,17 +1,38 @@
 const { ipcRenderer } = require('electron')
 
 let mylist;
+let idproduct
 let name;
 let price;
 let btnform;
-document.addEventListener("DOMContentLoaded", function() {
+let btnUpdate;
+let btndelete;
+
+
+
+/*document.addEventListener("DOMContentLoaded", function() {
+ 
+})*/
+
+window.onload = function() { 
    mylist = document.getElementById("mylist") 
    btnform = document.getElementById("btnform")
+   btnUpdate = document.getElementById("btnUpdate")
+   idproduct = document.getElementById("idproduct")
    name = document.getElementById("name")
    price = document.getElementById("price")
    btnform.onclick = renderAddProduct  
+   btnUpdate.onclick = renderUpdateProduct
+   
+
+   
+   
    renderGetProducts() 
-})
+};
+
+if(btndelete !=null){
+   console.log(btndelete)
+}
 
 async function renderGetProducts() 
 {
@@ -25,7 +46,8 @@ async function renderAddProduct()
       name:name.value,
       price: parseInt(price.value)
    }
-
+   name.value = ""
+   price.value = "" 
    await ipcRenderer.invoke('add', obj)   
 }
 
@@ -42,28 +64,61 @@ ipcRenderer.on('products', (event, results) => {
             <td>
             
              <button class="btn btn-danger"
-               id="${element.id}"
-               "'${onclick = renderdeleteproduct}'"
+               id="btndelete"
+               value="${element.id}"
                > 
                delete
              </button>
+             </td>
+             <td>
+            
            
             </td>
          </tr>
       ` 
    });
      
-  
    mylist.innerHTML = template
-   name.value = ""
-   price.value = "" 
- });
+   
+   if(list.length > 0){
+      btndelete = document.getElementById("btndelete")
+      if(btndelete!=null){
+         btndelete.onclick = renderdeleteproduct
+      }
+   }
+   
+    
+});
+
+
+
+
 
 async function renderdeleteproduct(e)
 {
-   console.log(e.srcElement)
-   const obj = {id: e.srcElement.id}
+   const obj = { id: e.target.value}
+   await ipcRenderer.invoke('delete', obj)    
+}
+
+function rendergetproduct(e){
    
-   await ipcRenderer.invoke('delete', obj) 
-    
+   const obj = { id: e.srcElement.id }
+   ipcRenderer.invoke("get_one" , obj)
+
+}
+
+/*ipcRenderer.on('product',(event, result) => {
+   idproduct.value = result.id
+   name.value = result.name
+   price.value = result.price
+});*/
+
+function renderUpdateProduct()
+{
+  const obj = {
+     id: idproduct.value,
+     name: name.value,
+     price: price.value 
+  }
+  console.log(obj)
 }

@@ -48,8 +48,23 @@ ipcMain.handle('delete', (event, obj) => {
   deleteproduct(obj)
 })
 
+ipcMain.handle('get_one', (event, obj) => {
+  const { id } = obj 
+  const sql = "SELECT * FROM product WHERE id = ?"
+  db.query(sql, id, (error, results, fields) => {
+    if (error){
+      console.log(error);
+    }
+    console.log(results)
+   // win.webContents.send('product', results[0])
+  });  
+   
+})
+
+
 function getProducts()
 {
+  
   db.query('SELECT * FROM product', (error, results, fields) => {
     if (error){
       console.log(error);
@@ -60,7 +75,8 @@ function getProducts()
 }
 
 
-function addProduct(obj){
+function addProduct(obj)
+{
   const sql = "INSERT INTO product SET ?";  
   db.query(sql, obj, (error, results, fields) => {
     if(error) {
@@ -70,8 +86,8 @@ function addProduct(obj){
  });
 }
 
-function deleteproduct(obj){
- 
+function deleteproduct(obj)
+{
   const { id } = obj
   const sql = "DELETE FROM product WHERE id = ?"
   db.query(sql, id, (error, results, fields) => {
@@ -79,7 +95,8 @@ function deleteproduct(obj){
        console.log(error);
     }
     getProducts()  
- });
-
+  });
 }
+
+
 
