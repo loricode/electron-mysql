@@ -38,28 +38,26 @@ app.on('activate', () => {
 
 ipcMain.handle('get', () => {
    getProducts()
-})
+});
 
 ipcMain.handle('add', (event, obj) => {
   addProduct(obj)
-})
+});
 
-ipcMain.handle('delete', (event, obj) => {
-  deleteproduct(obj)
-})
 
 ipcMain.handle('get_one', (event, obj) => {
-  const { id } = obj 
-  const sql = "SELECT * FROM product WHERE id = ?"
-  db.query(sql, id, (error, results, fields) => {
-    if (error){
-      console.log(error);
-    }
-    console.log(results)
-    win.webContents.send('product', results[0])
-  });  
-   
-})
+  getproduct(obj)    
+});
+
+ipcMain.handle('remove_product', (event, obj) => {
+  deleteproduct(obj)
+});
+
+
+ipcMain.handle('update', (event, obj) => {
+  updateproduct(obj)    
+});
+
 
 
 function getProducts()
@@ -88,7 +86,7 @@ function addProduct(obj)
 
 function deleteproduct(obj)
 {
-  const { id } = obj
+  const { id }  = obj
   const sql = "DELETE FROM product WHERE id = ?"
   db.query(sql, id, (error, results, fields) => {
     if(error) {
@@ -98,5 +96,30 @@ function deleteproduct(obj)
   });
 }
 
+function getproduct(obj)
+{
+  let { id } = obj 
+  let sql = "SELECT * FROM product WHERE id = ?"
+  db.query(sql, id, (error, results, fields) => {
+    if (error){
+      console.log(error);
+    }
+    console.log(results)
+    win.webContents.send('product', results[0])
+  });
+}
+
+
+function updateproduct(obj) 
+{
+   let { id, name, price } = obj
+   const sql = "UPDATE product SET name=?, price=? WHERE id=?";  
+   db.query(sql, [name, price, id], (error, results, fields) => {
+     if(error) {
+        console.log(error);
+     }
+     getProducts()  
+   });
+}
 
 
